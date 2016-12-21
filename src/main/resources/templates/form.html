@@ -13,6 +13,10 @@
             <p><input type="submit" value="Submit" /></p>
         </form>
 
+        <ul th:each="signup : ${signups}">
+            <li th:text="${signup.name}"></li>
+            
+        </ul>
         <p></p>
     </body>
 </html>

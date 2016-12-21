@@ -1,5 +1,7 @@
 /* Do not change this schema */
-CREATE TABLE Agent (
-    id varchar(9) PRIMARY KEY,
-    name varchar(200)
+DROP TABLE IF EXISTS Signup;
+CREATE TABLE Signup (
+    id bigint PRIMARY KEY,
+    name varchar(200),
+    address varchar(200)
 );
