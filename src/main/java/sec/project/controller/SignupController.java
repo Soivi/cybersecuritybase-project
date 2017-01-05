@@ -126,16 +126,18 @@ public class SignupController {
     }
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String name, @RequestParam String address)  throws Exception {
+    public String submitForm(@RequestParam String xname, @RequestParam String xaddress)  throws Exception {
         // <script>alert("testausta");</script>
         // <script>window.location.replace("https://soivi.net");</script>
+        // tekstia + "'); DELETE FROM Signup; INSERT INTO Signup (name, address) VALUES ('Charlie', 'Street
         
-        
-        signupRepository.save(new Signup(name, address));
+        signupRepository.save(new Signup(xname, xaddress));
         
         String databaseAddress = "jdbc:h2:file:./database";
         
-        String sql = "INSERT INTO Signup (name, address) VALUES ('" + name + "', '" + address + "')";
+        String sql = "INSERT INTO Signup (name, address) VALUES ('" + xname + "', '" + xaddress + "');";
+        
+        System.out.println(sql);
         
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
         connection.createStatement().execute(sql);
