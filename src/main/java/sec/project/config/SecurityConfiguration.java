@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // no real security at the moment
+        http.headers().xssProtection().disable();
         http.authorizeRequests()
                 .anyRequest().permitAll();
     }

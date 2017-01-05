@@ -13,10 +13,48 @@
             <p><input type="submit" value="Submit" /></p>
         </form>
 
+        
         <ul th:each="signup : ${signups}">
-            <li th:text="${signup.name}"></li>
-            
+            <li th:utext="${signup.name}"></li>
         </ul>
-        <p></p>
+        
+      <ul id="tasks">
+        </ul>
+      
+        <!--          
+        <script>
+            // The URL to the application server that holds the tasks.
+            var url = "/list";
+
+            var test = "test";
+            
+            function loadTasks() {                                
+                var http = new XMLHttpRequest();
+                http.onreadystatechange = function () {
+                    if (http.readyState === 4) {
+                        if (http.status === 200) {
+                            var response = JSON.parse(http.responseText);
+                            console.log(response);
+                            response.forEach(function(element) {
+                                var liElement = document.createElement("li");
+                                liElement.appendChild(document.createTextNode(element.name));
+                                document.querySelector("#tasks").appendChild(liElement);
+                            });
+                        }
+                    }
+                }
+                
+                
+                http.open("GET", url, true);
+                http.send(null);
+            }            
+
+            window.onload = function () {
+                loadTasks();
+                };
+        </script>
+        -->
+        
+        
     </body>
 </html>

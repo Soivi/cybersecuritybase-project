@@ -47,7 +47,7 @@ public class SignupController {
             String name = resultSet.getString("name");
             String address = resultSet.getString("address");
             signupRepository.save(new Signup(name, address));
-//            System.out.println("TÄSSÄ : " + id + "\t" + name + " " + address);
+            System.out.println("INIT : " + id + "\t" + name + " " + address);
         } 
         
         resultSet.close();
@@ -59,10 +59,10 @@ public class SignupController {
     
     private List<Signup> signupList;
 
-    //@RequestMapping("*")
-    //public String defaultMapping() {
-    //    return "redirect:/form";
-    //}
+    @RequestMapping("*")
+    public String defaultMapping() {
+        return "redirect:/form";
+    }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String loadForm(Model model) throws Exception {
@@ -83,7 +83,7 @@ public class SignupController {
             
             this.signupList.add(signup);
             //signupRepository.save(new Signup(name, address));
-            System.out.println("TÄSSÄ : " + id + "\t" + name + " " + address);
+            //System.out.println("TÄSSÄ : " + id + "\t" + name + " " + address);
         } 
         
         resultSet.close();
@@ -97,6 +97,7 @@ public class SignupController {
     @RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Signup> list() throws Exception {
+        System.out.println("list alku");
         this.signupList = new ArrayList<>();
         
         String databaseAddress = "jdbc:h2:file:./database";
