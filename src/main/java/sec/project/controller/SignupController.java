@@ -107,7 +107,7 @@ public class SignupController {
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
         
         while (resultSet.next()) {
-            String id = resultSet.getString("id");
+            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String address = resultSet.getString("address");
 
@@ -126,9 +126,22 @@ public class SignupController {
     }
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String name, @RequestParam String address) {
+    public String submitForm(@RequestParam String name, @RequestParam String address)  throws Exception {
+        // <script>alert("testausta");</script>
+        // <script>window.location.replace("https://soivi.net");</script>
+        
+        
         signupRepository.save(new Signup(name, address));
-        return "done";
+        
+        String databaseAddress = "jdbc:h2:file:./database";
+        
+        String sql = "INSERT INTO Signup (name, address) VALUES ('" + name + "', '" + address + "')";
+        
+        Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
+        connection.createStatement().execute(sql);
+        
+        //return "done";
+        return "redirect:/form";
     }
 
 }
