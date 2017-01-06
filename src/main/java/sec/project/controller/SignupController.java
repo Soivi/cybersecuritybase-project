@@ -3,7 +3,9 @@ package sec.project.controller;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -43,11 +45,11 @@ public class SignupController {
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
         
         while (resultSet.next()) {
-            String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             String address = resultSet.getString("address");
-            signupRepository.save(new Signup(name, address));
-            System.out.println("INIT : " + id + "\t" + name + " " + address);
+            String creditcard = resultSet.getString("creditcard");
+            signupRepository.save(new Signup(name, address, creditcard));
+            System.out.println("INIT : \t" + name + " " + address + " " + creditcard);
         } 
         
         resultSet.close();
@@ -75,11 +77,11 @@ public class SignupController {
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
         
         while (resultSet.next()) {
-            String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             String address = resultSet.getString("address");
-
-            Signup signup = new Signup(name, address);
+            String creditcard = resultSet.getString("creditcard");
+            
+            Signup signup = new Signup(name, address, creditcard);
             
             this.signupList.add(signup);
             //signupRepository.save(new Signup(name, address));
@@ -103,19 +105,18 @@ public class SignupController {
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
 
-
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
         
         while (resultSet.next()) {
-            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String address = resultSet.getString("address");
+            String creditcard = resultSet.getString("creditcard");
 
-            Signup signup = new Signup(name, address);
+            Signup signup = new Signup(name, address, creditcard);
             
             this.signupList.add(signup);
             //signupRepository.save(new Signup(name, address));
-            System.out.println("TÄSSÄ : " + id + "\t" + name + " " + address);
+            System.out.println("TÄSSÄ : \t" + name + " " + address + " " + creditcard);
         } 
         
         resultSet.close();
@@ -126,24 +127,42 @@ public class SignupController {
     }
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String xname, @RequestParam String xaddress)  throws Exception {
+    public String submitForm(@RequestParam String formname, @RequestParam String formaddress, @RequestParam String formcreditcard)  throws Exception {
         // <script>alert("testausta");</script>
         // <script>window.location.replace("https://soivi.net");</script>
         // tekstia + "'); DELETE FROM Signup; INSERT INTO Signup (name, address) VALUES ('Charlie', 'Street
-        
-        signupRepository.save(new Signup(xname, xaddress));
+        // debit + "'); DELETE FROM Signup; INSERT INTO Signup (name, address, creditcard) VALUES ('Charlie', 'Street' , '377725598642897
+        signupRepository.save(new Signup(formname, formaddress, formcreditcard));
         
         String databaseAddress = "jdbc:h2:file:./database";
-        
-        String sql = "INSERT INTO Signup (name, address) VALUES ('" + xname + "', '" + xaddress + "');";
-        
-        System.out.println(sql);
-        
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
+        
+        // A1 SQL Injection
+        // Comment this
+        String sql = "INSERT INTO Signup (name, address, creditcard) VALUES ('" + formname + "', '" + formaddress + "', '" + formcreditcard + "');";
         connection.createStatement().execute(sql);
         
-        //return "done";
-        return "redirect:/form";
+        // Uncomment this
+        /*
+        String sql = "INSERT INTO Signup (name, address, creditcard) VALUES (?, ?, ?);";
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, formname);
+            preparedStatement.setString(2, formaddress);
+            preparedStatement.setString(3, formcreditcard);
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException t){
+            System.out.println("Insert error");
+        }
+        */
+        
+        System.out.println(sql);       
+        return "done";
     }
-
+    
+    @RequestMapping(value = "/done", method = RequestMethod.GET)
+    public String loadDone(Model model) {
+        return "done";
+    }
 }

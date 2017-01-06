@@ -8,54 +8,15 @@
         <h1>Sign up to the event using this form</h1>
 
         <form action="#" th:action="@{/form}" method="POST">
-            <p><label for="name">Name</label>: <input type="text" name="xname" id="name"/></p>
-            <p><label for="address">Address</label>: <input type="text" name="xaddress" id="address"/></p>
+            <p><label for="name">Name</label>: <input type="text" name="formname" id="name"/></p>
+            <p><label for="address">Address</label>: <input type="text" name="formaddress" id="address"/></p>
+            <p><label for="creditcard">Creditcard</label>: <input type="text" name="formcreditcard" id="creditcard"/></p>
             <p><input type="submit" value="Submit" /></p>
         </form>
 
-        
+        <h2>They are signed</h2>
         <ul th:each="signup : ${signups}">
             <li th:utext="${signup.name}"></li>
-            <li th:utext="${signup.id}"></li>
-        </ul>
-        
-      <ul id="tasks">
-        </ul>
-      
-        <!--          
-        <script>
-            // The URL to the application server that holds the tasks.
-            var url = "/list";
-
-            var test = "test";
-            
-            function loadTasks() {                                
-                var http = new XMLHttpRequest();
-                http.onreadystatechange = function () {
-                    if (http.readyState === 4) {
-                        if (http.status === 200) {
-                            var response = JSON.parse(http.responseText);
-                            console.log(response);
-                            response.forEach(function(element) {
-                                var liElement = document.createElement("li");
-                                liElement.appendChild(document.createTextNode(element.name));
-                                document.querySelector("#tasks").appendChild(liElement);
-                            });
-                        }
-                    }
-                }
-                
-                
-                http.open("GET", url, true);
-                http.send(null);
-            }            
-
-            window.onload = function () {
-                loadTasks();
-                };
-        </script>
-        -->
-        
-        
+        </ul>             
     </body>
 </html>
