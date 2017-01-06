@@ -72,8 +72,6 @@ public class SignupController {
         
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
-
-
         ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
         
         while (resultSet.next()) {
@@ -84,15 +82,10 @@ public class SignupController {
             Signup signup = new Signup(name, address, creditcard);
             
             this.signupList.add(signup);
-            //signupRepository.save(new Signup(name, address));
-            //System.out.println("TÄSSÄ : " + id + "\t" + name + " " + address);
         } 
-        
         resultSet.close();
         connection.close();
-        
         model.addAttribute("signups", this.signupList);
-        //model.addAttribute("signups", signupRepository.findAll());
         return "form";
     }
    
@@ -112,11 +105,14 @@ public class SignupController {
             String address = resultSet.getString("address");
             String creditcard = resultSet.getString("creditcard");
 
+            // A6-Sensitive Data Exposure
+            // Comment this
             Signup signup = new Signup(name, address, creditcard);
+            // Uncomment this
+            //Signup signup = new Signup(name, address);
             
             this.signupList.add(signup);
-            //signupRepository.save(new Signup(name, address));
-            System.out.println("TÄSSÄ : \t" + name + " " + address + " " + creditcard);
+            System.out.println("TÄSSÄ : \t" + name + " " + address);
         } 
         
         resultSet.close();
@@ -128,20 +124,18 @@ public class SignupController {
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
     public String submitForm(@RequestParam String formname, @RequestParam String formaddress, @RequestParam String formcreditcard)  throws Exception {
-        // <script>alert("testausta");</script>
+        // <script>alert("testing");</script>
         // <script>window.location.replace("https://soivi.net");</script>
-        // tekstia + "'); DELETE FROM Signup; INSERT INTO Signup (name, address) VALUES ('Charlie', 'Street
         // debit + "'); DELETE FROM Signup; INSERT INTO Signup (name, address, creditcard) VALUES ('Charlie', 'Street' , '377725598642897
         signupRepository.save(new Signup(formname, formaddress, formcreditcard));
         
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
         
-        // A1 SQL Injection
+        // A1-Injection
         // Comment this
         String sql = "INSERT INTO Signup (name, address, creditcard) VALUES ('" + formname + "', '" + formaddress + "', '" + formcreditcard + "');";
         connection.createStatement().execute(sql);
-        
         // Uncomment this
         /*
         String sql = "INSERT INTO Signup (name, address, creditcard) VALUES (?, ?, ?);";
