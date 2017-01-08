@@ -25,18 +25,25 @@ Test vulnerability
 - Open http://localhost:8080/form
 - Add these to your Form:
 
-Name:  
+Name:
+```
 Jackie
+```
 
-Creditcard:  
+Creditcard:
+```
 6011999910910162
+```
 
-Your homepage name:  
+Your homepage name:
+```
 EVIL
+```
 
 Your hamepage url:  
+```sql
 pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'Evil PAGE', 'http://localhost:8080/password?password=evil
-
+```
 
 - Then push submit.
 - List should be deleted and there should be only Charlie.
@@ -48,6 +55,56 @@ SignupController.java:
 - Uncomment lines 127-138
 
 
+
+### A3-Cross-Site Scripting (XSS) ###
+- Open http://localhost:8080/form
+- Add these to your Form:
+
+Name:  
+```javascript
+<script>alert("testing");</script>
+```
+
+Creditcard:
+```
+5557258692179716
+```
+
+Your homepage name:
+```
+OwnSite
+```
+
+Your hamepage url:
+```
+http://ownsite.com
+```
+
+- Then push submit.
+- Push Back to signup form
+- Alert text should appear
+
+- Or you can just redirect just change Name on the form to this:
+```javascript
+<script>window.location.replace("https://soivi.net");</script>
+```
+
+#### How to fix ####
+
+form.html
+- Comment line 27
+- Uncomment line 29
+
+SecurityConfiguration.java
+- Comment line 37
+
+
+
+### A6-Sensitive Data Exposure ###
+
+#### How to fix ####
+
+
 ### A2-Broken Authentication and Session Management ###
 
 #### How to fix ####
@@ -55,22 +112,6 @@ SignupController.java:
 
 
 
-
-### A3-Cross-Site Scripting (XSS) ###
-
-<script>alert("testing");</script>
-<script>window.location.replace("https://soivi.net");</script>
-
-
-#### How to fix ####
-
-
-
-
-
-### A6-Sensitive Data Exposure ###
-
-#### How to fix ####
 
 
 
