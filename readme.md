@@ -45,8 +45,8 @@ Your hamepage url:
 pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'Evil PAGE', 'http://localhost:8080/password?password=evil
 ```
 
-- Then push submit.
-- List should be deleted and there should be only Charlie.
+- Then push submit
+- List should be deleted and there should be only Charlie
 
 #### How to fix ####
 
@@ -102,7 +102,7 @@ SecurityConfiguration.java
 - Open http://localhost:8080/done
 - List of the signups comes from http://localhost:8080/list
 - Open http://localhost:8080/list
-- It sends too much information example creditcard.
+- It sends too much information example creditcard
 
 #### How to fix ####
 SignupController.java
@@ -150,6 +150,7 @@ SecurityConfiguration.java
 admin.html
 - Comment line 15
 - Uncomment line 17
+
 SignupController.java
 - Comment line 175
 - Uncomment line 177
