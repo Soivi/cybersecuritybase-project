@@ -28,10 +28,6 @@ public class SignupController {
 
     @PostConstruct
     public void init() throws Exception {
-        // this data would typically be retrieved from a database
-        // this.accountDetails = new TreeMap<>();
-        // this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
-        
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
 
@@ -61,10 +57,10 @@ public class SignupController {
     
     private List<Signup> signupList;
 
-    @RequestMapping("*")
-    public String defaultMapping() {
-        return "redirect:/form";
-    }
+    //@RequestMapping("*")
+    //public String defaultMapping() {
+    //    return "redirect:/form";
+    //}
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String loadForm(Model model) throws Exception {

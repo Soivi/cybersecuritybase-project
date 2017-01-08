@@ -25,6 +25,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Map<String, String> accountDetails;
     
+    @PostConstruct
+    public void init() {
+        // this data would typically be retrieved from a database
+        this.accountDetails = new TreeMap<>();
+        //this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
+        //this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
+        this.accountDetails.put("ted", "ted");
+    }
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (!this.accountDetails.containsKey(username)) {
