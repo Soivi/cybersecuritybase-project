@@ -54,5 +54,10 @@ public class Signup extends AbstractPersistable<Long> {
         this.site = site;
         this.siteurl = siteurl;
     }
+    
+    public Signup(String name) {
+        this();
+        this.name = name;
+    }
 
 }

@@ -5,29 +5,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.websocket.Session;
 import org.h2.tools.RunScript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import sec.project.config.CustomUserDetailsService;
 import sec.project.domain.Signup;
-import sec.project.repository.SignupRepository;
 
 @Controller
 public class SignupController {
@@ -110,7 +101,7 @@ public class SignupController {
             // Comment this
             Signup signup = new Signup(name, creditcard, site, siteurl);
             // Uncomment this
-            //Signup signup = new Signup(name, address);
+            //Signup signup = new Signup(name);
             
             this.signupList.add(signup);
             System.out.println("TÄSSÄ : \t" + name);
@@ -119,7 +110,6 @@ public class SignupController {
         resultSet.close();
         connection.close();
 
-        //model.addAttribute("signups", signupRepository.findAll());
         return this.signupList;
     }
     
@@ -127,10 +117,7 @@ public class SignupController {
     public String submitForm(@RequestParam String formname, @RequestParam String formcreditcard, @RequestParam String formsite, @RequestParam String formsiteurl)  throws Exception {
         // <script>alert("testing");</script>
         // <script>window.location.replace("https://soivi.net");</script>
-        // debit + "'); DELETE FROM Signup; INSERT INTO Signup (name, address, creditcard) VALUES ('Charlie', 'Street' , '377725598642897
         // pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'OwnSite', 'http://ownsite.com
-        
-        //signupRepository.save(new Signup(formname, formcreditcard, formsite, formsiteurl));
         
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
