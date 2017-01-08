@@ -178,4 +178,10 @@ public class SignupController {
         customUserDetailsService.changePassword(authentication.getName(), password);
         return "redirect:/admin";
     }
+    
+    @RequestMapping(value = "/done", method = RequestMethod.GET)
+    public String done() {
+        return "done";
+    }
+    
 }
