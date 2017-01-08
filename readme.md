@@ -141,10 +141,9 @@ SecurityConfiguration.java
 - Login Admin page using ted
 - In userlist there should be user name James
 - James has site named Evil PAGE what url is http://localhost:8080/password?password=evil
-- Push that link to go that page
+- Push that link to go to that page
 - Looks like nothing happens
-- Logout
-- Login
+- Logout and Login
 - Ted's password has been changed to evil
 
 #### How to fix ####
