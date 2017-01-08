@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Sign up form</title>
+    </head>
+    <body>
+
+        <h1>Sign up to the lottery using this form</h1>
+
+        <p>We need your creditcard if you win. This way we can pay the winnings</p>
+        <form action="#" th:action="@{/form}" method="POST">
+            <p><label for="name">Name</label>: <input type="text" name="formname" id="name"/></p>
+            <p><label for="address">Address</label>: <input type="text" name="formaddress" id="address"/></p>
+            <p><label for="creditcard">Creditcard</label>: <input type="text" name="formcreditcard" id="creditcard"/></p>
+            <p><input type="submit" value="Submit" /></p>
+        </form>
+
+        <h2>They are signed</h2>
+        <ul th:each="signup : ${signups}">
+            <!-- A3-Cross-Site Scripting (XSS) -->
+            <!-- Comment this -->
+            <li th:utext="${signup.name}"></li>
+            <!-- Uncomment this -->
+            <!-- <li th:text="${signup.name}"></li> -->
+        </ul>             
+    </body>
+</html>
