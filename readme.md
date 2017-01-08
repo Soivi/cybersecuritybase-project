@@ -4,7 +4,7 @@ This project is part of Cyber Security Base course. Cyber Security Base with F-S
 
 ### Cyber Security Base - Course Project I ###
 
-In the course project, task is to create a web application that has at five flaws from the OWASP top ten list (https://www.owasp.org/index.php/Top_10_2013-Top_10). Starter code for the project is provided on Github at https://github.com/cybersecuritybase/cybersecuritybase-project.
+In the course project, task is to create a web application that has five flaws from the OWASP top ten list (https://www.owasp.org/index.php/Top_10_2013-Top_10). Starter code for the project is provided on Github at https://github.com/cybersecuritybase/cybersecuritybase-project.
 
 ## How to deploy ##
 
