@@ -8,11 +8,11 @@ In the course project, task is to create a web application that has five flaws f
 
 ## How to deploy ##
 
-1. Download Netbeans (or Eclipse)
-2. Download repository to your Netbeans projects (something like this /NetBeansProjects/mooc-2016-securing-software/cybersecuritybase-project)
-3. Open Netbeans
-4. Run Project
-5. Open browser and go to http://localhost:8080/form
+- Download Netbeans (or Eclipse)
+- Download repository to your Netbeans projects (something like this /NetBeansProjects/mooc-2016-securing-software/cybersecuritybase-project)
+- Open Netbeans
+- Run Project
+- Open browser and go to http://localhost:8080/form
 
 ## Vulnerabilities ##
 
@@ -22,31 +22,30 @@ Here is five flaws on the project. How to test vulnerabilities and fix those. (T
 
 Test vulnerability
 
-1. Open http://localhost:8080/form
-2. Add these to your Form
+- Open http://localhost:8080/form
+- Add these to your Form:
 
-Name:
+Name:  
 Jackie
 
-Creditcard:
+Creditcard:  
 6011999910910162
 
-Your homepage name:
+Your homepage name:  
 EVIL
 
-Your hamepage url:
+Your hamepage url:  
 pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'Evil PAGE', 'http://localhost:8080/password?password=evil
 
 
-Then push submit.
-
-3. List should be deleted and there should be only Charlie.
+- Then push submit.
+- List should be deleted and there should be only Charlie.
 
 #### How to fix ####
 
-- SignupController.java:
-1. Comment lines 123-124
-2. Uncomment lines 127-138
+SignupController.java:  
+- Comment lines 123-124
+- Uncomment lines 127-138
 
 
 ### A2-Broken Authentication and Session Management ###
