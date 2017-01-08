@@ -55,7 +55,6 @@ SignupController.java:
 - Uncomment lines 127-138
 
 
-
 ### A3-Cross-Site Scripting (XSS) ###
 - Open http://localhost:8080/form
 - Add these to your Form:
@@ -79,11 +78,9 @@ Your hamepage url:
 ```
 http://ownsite.com
 ```
-
 - Then push submit
 - Push Back to signup form
 - Alert text should appear
-
 - You can also test redirect. Change Name on the form to this:
 ```javascript
 <script>window.location.replace("https://soivi.net");</script>
