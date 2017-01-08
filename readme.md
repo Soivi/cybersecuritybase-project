@@ -80,11 +80,11 @@ Your hamepage url:
 http://ownsite.com
 ```
 
-- Then push submit.
+- Then push submit
 - Push Back to signup form
 - Alert text should appear
 
-- Or you can just redirect just change Name on the form to this:
+- You can also test redirect. Change Name on the form to this:
 ```javascript
 <script>window.location.replace("https://soivi.net");</script>
 ```
@@ -98,12 +98,16 @@ form.html
 SecurityConfiguration.java
 - Comment line 37
 
-
-
 ### A6-Sensitive Data Exposure ###
+- Open http://localhost:8080/done
+- List of the signups comes from http://localhost:8080/list
+- Open http://localhost:8080/list
+- It sends too much information example creditcard.
 
 #### How to fix ####
-
+SignupController.java
+- Comment line 103
+- Uncomment line 105
 
 ### A2-Broken Authentication and Session Management ###
 
