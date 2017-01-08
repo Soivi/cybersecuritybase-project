@@ -111,15 +111,46 @@ SignupController.java
 
 ### A2-Broken Authentication and Session Management ###
 
+- All users have been saved plaintext to the database
+- Test loggin
+- Open http://localhost:8080/form
+- Push button Admin
+
+User:
+```
+ted
+```
+Password:
+```
+ted
+```
+- Push login
+- Admin page should appear
+
 #### How to fix ####
+CustomUserDetailsService.java
+- Comment line 29, 54
+- Uncomment line 31, 56
 
-
-
-
-
-
+SecurityConfiguration.java
+- Comment line 44
+- Uncomment line 46
 
 
 ### A8-Cross-Site Request Forgery (CSRF) ###
+- Login Admin page using ted
+- In userlist there should be user name James
+- James has site named Evil PAGE what url is http://localhost:8080/password?password=evil
+- Push that link to go that page
+- Looks like nothing happens
+- Logout
+- Login
+- Ted's password has been changed to evil
 
 #### How to fix ####
+admin.html
+- Comment line 15
+- Uncomment line 17
+SignupController.java
+- Comment line 175
+- Uncomment line 177
