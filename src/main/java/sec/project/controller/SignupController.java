@@ -114,11 +114,7 @@ public class SignupController {
     }
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String formname, @RequestParam String formcreditcard, @RequestParam String formsite, @RequestParam String formsiteurl)  throws Exception {
-        // <script>alert("testing");</script>
-        // <script>window.location.replace("https://soivi.net");</script>
-        // pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'OwnSite', 'http://ownsite.com
-        
+    public String submitForm(@RequestParam String formname, @RequestParam String formcreditcard, @RequestParam String formsite, @RequestParam String formsiteurl)  throws Exception {        
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
         
