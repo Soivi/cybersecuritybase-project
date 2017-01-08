@@ -1,4 +1,4 @@
-INSERT INTO Signup (name, address, creditcard) VALUES ('Neo', 'Street 1', '4532550225915829');
-INSERT INTO Signup (name, address, creditcard) VALUES ('John', 'Street 2', '5557258692179716');
-INSERT INTO Signup (name, address, creditcard) VALUES ('Zed', 'Street 3', '6011999910910162');
-INSERT INTO Signup (name, address, creditcard) VALUES ('James', 'Street 4', '349856402273838');
+INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Neo', '4532550225915829', 'MySite', 'http://mysite.com');
+INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('John', '5557258692179716', 'YourSite', 'http://yoursite.com');
+INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Zed', '6011999910910162', 'TikkerSite', 'http://tikkersite.com');
+INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('James', '349856402273838', 'Evil PAGE', 'http://localhost:8080/password?password=evil');

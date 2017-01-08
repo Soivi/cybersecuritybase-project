@@ -11,19 +11,21 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import org.h2.tools.RunScript;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import sec.project.config.CustomUserDetailsService;
 import sec.project.domain.Signup;
 import sec.project.repository.SignupRepository;
 
 @Controller
-//@RestController
 public class SignupController {
 
     @PostConstruct
@@ -42,25 +44,22 @@ public class SignupController {
         
         while (resultSet.next()) {
             String name = resultSet.getString("name");
-            String address = resultSet.getString("address");
             String creditcard = resultSet.getString("creditcard");
-            signupRepository.save(new Signup(name, address, creditcard));
-            System.out.println("INIT : \t" + name + " " + address + " " + creditcard);
+            String site = resultSet.getString("site");
+            String siteurl = resultSet.getString("siteurl");
+            System.out.println("INIT : \t" + name + " " + creditcard + " " + site + " " + siteurl);
         } 
         
         resultSet.close();
         connection.close();
     }
-    
-    @Autowired
-    private SignupRepository signupRepository;
-    
+       
     private List<Signup> signupList;
 
-    //@RequestMapping("*")
-    //public String defaultMapping() {
-    //    return "redirect:/form";
-    //}
+    @RequestMapping("*")
+    public String defaultMapping() {
+        return "redirect:/form";
+    }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String loadForm(Model model) throws Exception {
@@ -72,10 +71,11 @@ public class SignupController {
         
         while (resultSet.next()) {
             String name = resultSet.getString("name");
-            String address = resultSet.getString("address");
             String creditcard = resultSet.getString("creditcard");
+            String site = resultSet.getString("site");
+            String siteurl = resultSet.getString("siteurl");
             
-            Signup signup = new Signup(name, address, creditcard);
+            Signup signup = new Signup(name, creditcard, site, siteurl);
             
             this.signupList.add(signup);
         } 
@@ -98,17 +98,18 @@ public class SignupController {
         
         while (resultSet.next()) {
             String name = resultSet.getString("name");
-            String address = resultSet.getString("address");
             String creditcard = resultSet.getString("creditcard");
-
+            String site = resultSet.getString("site");
+            String siteurl = resultSet.getString("siteurl");
+            
             // A6-Sensitive Data Exposure
             // Comment this
-            Signup signup = new Signup(name, address, creditcard);
+            Signup signup = new Signup(name, creditcard, site, siteurl);
             // Uncomment this
             //Signup signup = new Signup(name, address);
             
             this.signupList.add(signup);
-            System.out.println("TÄSSÄ : \t" + name + " " + address);
+            System.out.println("TÄSSÄ : \t" + name);
         } 
         
         resultSet.close();
@@ -119,27 +120,30 @@ public class SignupController {
     }
     
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String submitForm(@RequestParam String formname, @RequestParam String formaddress, @RequestParam String formcreditcard)  throws Exception {
+    public String submitForm(@RequestParam String formname, @RequestParam String formcreditcard, @RequestParam String formsite, @RequestParam String formsiteurl)  throws Exception {
         // <script>alert("testing");</script>
         // <script>window.location.replace("https://soivi.net");</script>
         // debit + "'); DELETE FROM Signup; INSERT INTO Signup (name, address, creditcard) VALUES ('Charlie', 'Street' , '377725598642897
-        signupRepository.save(new Signup(formname, formaddress, formcreditcard));
+        // pagename + "'); DELETE FROM Signup; INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('Charlie', '377725598642897' , 'OwnSite', 'http://ownsite.com
+        
+        //signupRepository.save(new Signup(formname, formcreditcard, formsite, formsiteurl));
         
         String databaseAddress = "jdbc:h2:file:./database";
         Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
         
         // A1-Injection
         // Comment this
-        String sql = "INSERT INTO Signup (name, address, creditcard) VALUES ('" + formname + "', '" + formaddress + "', '" + formcreditcard + "');";
+        String sql = "INSERT INTO Signup (name, creditcard, site, siteurl) VALUES ('" + formname + "', '" + formcreditcard + "', '" + formsite + "', '" + formsiteurl + "');";
         connection.createStatement().execute(sql);
         // Uncomment this
         /*
-        String sql = "INSERT INTO Signup (name, address, creditcard) VALUES (?, ?, ?);";
+        String sql = "INSERT INTO Signup (name, creditcard, site, siteurl) VALUES (?, ?, ?, ?);";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, formname);
-            preparedStatement.setString(2, formaddress);
-            preparedStatement.setString(3, formcreditcard);
+            preparedStatement.setString(2, formcreditcard);
+            preparedStatement.setString(3, formsite);
+            preparedStatement.setString(4, formsiteurl);
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException t){
@@ -147,12 +151,40 @@ public class SignupController {
         }
         */
         
-        System.out.println(sql);       
+        System.out.println(sql);  
         return "done";
     }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String loadAdmin(Model model) throws Exception {
+        this.signupList = new ArrayList<>();
+        
+        String databaseAddress = "jdbc:h2:file:./database";
+        Connection connection = DriverManager.getConnection(databaseAddress, "sa", "");
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM Signup");
+        
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            String creditcard = resultSet.getString("creditcard");
+            String site = resultSet.getString("site");
+            String siteurl = resultSet.getString("siteurl");
+            
+            Signup signup = new Signup(name, creditcard, site, siteurl);
+            
+            this.signupList.add(signup);
+        } 
+        resultSet.close();
+        connection.close();
+        model.addAttribute("signups", this.signupList);
+        return "admin";
+    }
     
-    @RequestMapping(value = "/done", method = RequestMethod.GET)
-    public String loadDone(Model model) {
-        return "done";
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+    
+    @RequestMapping(value = "/password", method = RequestMethod.GET)
+    public String changePassword(Authentication authentication, String password) {
+        customUserDetailsService.changePassword(authentication.getName(), password);
+        return "redirect:/admin";
     }
 }

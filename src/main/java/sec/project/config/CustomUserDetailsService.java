@@ -19,19 +19,28 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import org.h2.tools.RunScript;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private Map<String, String> accountDetails;
+    @Autowired
+    private PasswordEncoder passwordencoder;
+    
     
     @PostConstruct
     public void init() {
         // this data would typically be retrieved from a database
         this.accountDetails = new TreeMap<>();
-        //this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
-        //this.accountDetails.put("ted", "$2a$06$rtacOjuBuSlhnqMO2GKxW.Bs8J6KI0kYjw/gtF0bfErYgFyNTZRDm");
+
+        // A2-Broken Authentication and Session Management
+        // Comment this
         this.accountDetails.put("ted", "ted");
+        // Uncomment this
+        //this.accountDetails.put("ted", passwordencoder.encode("ted"));
+
     }
     
     @Override
@@ -49,4 +58,13 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true,
                 Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
+    
+    public void changePassword(String name, String password) {        
+        // A2-Broken Authentication and Session Management
+        // Comment this
+        this.accountDetails.replace(name, password);
+        // Uncomment this
+        //this.accountDetails.replace(name, passwordencoder.encode(password));        
+    }
+    
 }

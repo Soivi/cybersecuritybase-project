@@ -21,16 +21,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // no real security at the moment
         http.authorizeRequests()
-        .antMatchers("/").permitAll()
-        .antMatchers("/login").permitAll()
+        .antMatchers("/", "/login", "/form","/done", "/list").permitAll()
         .anyRequest().authenticated();
 
         http.formLogin()
         .permitAll()
         .and()
         .logout()
+        .logoutSuccessUrl("/form")
         .permitAll();
         
         // A3-Cross-Site Scripting (XSS)
@@ -42,8 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        // A2-Broken Authentication and Session Management
+        // Comment this
         auth.userDetailsService(userDetailsService).passwordEncoder(new PlaintextPasswordEncoder());
+        // Uncomment this
+        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
