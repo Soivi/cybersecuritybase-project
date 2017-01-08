@@ -35,8 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // A3-Cross-Site Scripting (XSS)
         // Comment this
         http.headers().xssProtection().disable();
-        
-        // http.csrf().disable();
     }
 
     @Autowired

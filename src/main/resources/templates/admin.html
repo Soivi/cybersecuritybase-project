@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Sign up form</title>
+        <title>Admin page</title>
     </head>
     <body>
         <form th:action="@{/logout}" method="POST">
@@ -9,8 +9,12 @@
         </form>
         
         <h1>Admin Page</h1>
-
+        
+        <!-- A8-Cross-Site Request Forgery -->
+        <!-- Comment this -->
         <form th:action="@{/password}" th:method="GET">
+        <!-- Uncomment this -->
+        <!-- <form th:action="@{/password}" th:method="POST"> -->
 		Change password: <input type="password" name="password" th:value="${password}" /><br />
 		<input type="submit" value="password"/>
 	</form>

@@ -1,7 +1,6 @@
 package sec.project.config;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.annotation.PostConstruct;
@@ -10,15 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import sec.project.domain.Signup;
-import sec.project.repository.SignupRepository;
-
-import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import org.h2.tools.RunScript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -32,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     
     @PostConstruct
     public void init() {
-        // this data would typically be retrieved from a database
         this.accountDetails = new TreeMap<>();
 
         // A2-Broken Authentication and Session Management

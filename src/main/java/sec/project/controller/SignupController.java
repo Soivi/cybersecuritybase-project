@@ -9,11 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.websocket.Session;
 import org.h2.tools.RunScript;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -182,7 +186,11 @@ public class SignupController {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
     
+    // A8-Cross-Site Request Forgery
+    // Comment this
     @RequestMapping(value = "/password", method = RequestMethod.GET)
+    // Uncomment this
+    //@RequestMapping(value = "/password", method = RequestMethod.POST)
     public String changePassword(Authentication authentication, String password) {
         customUserDetailsService.changePassword(authentication.getName(), password);
         return "redirect:/admin";
