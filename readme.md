@@ -19,9 +19,6 @@ In the course project, task is to create a web application that has five flaws f
 Here is five flaws on the project. How to test vulnerabilities and fix those. (There could be more vulnerabilities than these, but don't mind those)
 
 ### A1-Injection ###
-
-Test vulnerability
-
 - Open http://localhost:8080/form
 - Add these to your Form:
 
@@ -79,7 +76,7 @@ Your hamepage url:
 http://ownsite.com
 ```
 - Then push submit
-- Push Back to signup form
+- Push button Back to signup form
 - Alert text should appear
 - You can also test redirect. Change Name on the form to this:
 ```javascript
